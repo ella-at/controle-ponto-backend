@@ -14,7 +14,7 @@ module.exports = {
 
   async create(req, res) {
     try {
-      const { nome, cargo, departamento } = req.body;
+      const { nome, cargo, departamento, pix } = req.body;
       const funcionario = await Funcionario.create({ nome, cargo, departamento, pix });
       res.status(201).json(funcionario);
     } catch (error) {
