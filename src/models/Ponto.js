@@ -10,10 +10,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     foto: DataTypes.STRING,
     assinatura: DataTypes.STRING,
+    funcionario_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'pontos',
+    underscored: false, // usa camelCase nos campos createdAt/updatedAt
+    timestamps: true    // habilita createdAt/updatedAt automaticamente
   });
 
   Ponto.associate = (models) => {
-    Ponto.belongsTo(models.Funcionario, { foreignKey: 'funcionario_id' });
+    Ponto.belongsTo(models.Funcionario, {
+      foreignKey: 'funcionario_id',
+      as: 'Funcionario'
+    });
   };
 
   return Ponto;

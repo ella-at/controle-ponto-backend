@@ -1,16 +1,19 @@
 const Sequelize = require('sequelize');
-const config = require('../config/db');
+const sequelize = require('../config/db'); // sua instância do Sequelize
 
 const db = {};
 
 db.Sequelize = Sequelize;
-db.sequelize = config;
+db.sequelize = sequelize;
 
-db.Funcionario = require('./Funcionario')(config, Sequelize.DataTypes);
-db.Ponto = require('./Ponto')(config, Sequelize.DataTypes);
+// Modelos
+db.Funcionario = require('./Funcionario')(sequelize, Sequelize.DataTypes);
+db.Ponto = require('./Ponto')(sequelize, Sequelize.DataTypes);
+db.Pagamento = require('./Pagamento')(sequelize, Sequelize.DataTypes);
 
 // Associações
 db.Funcionario.associate(db);
 db.Ponto.associate(db);
+db.Pagamento.associate(db);
 
 module.exports = db;
