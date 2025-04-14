@@ -18,6 +18,7 @@ router.get('/por-data', PontoController.pontosPorData);
 
 router.get('/exportar', PontoController.exportarExcel);
 router.get('/por-funcionario/:id', PontoController.porFuncionario);
+router.get('/funcionario/:id', PontoController.porFuncionario);
 
 module.exports = router;
 

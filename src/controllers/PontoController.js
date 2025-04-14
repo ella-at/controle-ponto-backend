@@ -153,6 +153,20 @@ module.exports = {
     }
   },
   
+  async porFuncionario(req, res) {
+    try {
+      const funcionario_id = req.params.id;
+      const pontos = await Ponto.findAll({
+        where: { funcionario_id },
+        order: [['data_hora', 'DESC']]
+      });
+      res.json(pontos);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao buscar registros do funcionário' });
+    }
+  },
+  
   
   async exportarExcel(req, res) {
     try {
@@ -192,7 +206,7 @@ module.exports = {
 
       return res.download(filePath, 'registros-ponto.xlsx', err => {
         if (err) console.error('Erro ao enviar arquivo:', err);
-        fs.unlink(filePath, () => {}); // Remove o arquivo após envio
+        fs.unlink(filePath, () => {}); 
       });
     } catch (err) {
       console.error(err);

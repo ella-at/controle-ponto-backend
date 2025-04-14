@@ -11,15 +11,16 @@ module.exports = {
 
       const comprovantePath = req.file?.path || '';
       const caminhoRelativo = comprovantePath
-        ? 'uploads/' + path.basename(comprovantePath)
-        : null;
+      ? `uploads/comprovantes/${path.basename(comprovantePath)}`
+      : null;
+
 
       const pagamento = await Pagamento.create({
         funcionario_id,
         ponto_id,
         comprovante: caminhoRelativo,
       });
-
+  
       res.status(201).json(pagamento);
     } catch (error) {
       console.error(error);

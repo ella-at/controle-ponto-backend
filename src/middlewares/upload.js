@@ -2,22 +2,29 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+// Cria pasta se não existir
+function ensureFolderExists(folderPath) {
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
+  }
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let folder = 'uploads';
+    let subfolder = '';
 
     if (file.fieldname === 'foto') {
-      folder = 'uploads/fotos';
+      subfolder = 'fotos';
     } else if (file.fieldname === 'assinatura') {
-      folder = 'uploads/assinaturas';
+      subfolder = 'assinaturas';
     } else if (file.fieldname === 'comprovante') {
-      folder = 'uploads/comprovantes';
+      subfolder = 'comprovantes';
     }
 
-    // Cria a pasta se não existir
-    fs.mkdirSync(folder, { recursive: true });
+    const fullPath = path.join(__dirname, '../../uploads', subfolder);
+    ensureFolderExists(fullPath);
 
-    cb(null, folder);
+    cb(null, fullPath);
   },
 
   filename: (req, file, cb) => {
